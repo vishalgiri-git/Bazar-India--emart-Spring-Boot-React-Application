@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 
 @EntityScan(basePackages = "Ecom")
+
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "REST API", version = "1.1"), security = {
 		@SecurityRequirement(name = "basicAuth"), @SecurityRequirement(name = "bearerToken") }, servers = {
@@ -23,7 +24,7 @@ public class EcomApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EcomApplication.class, args);
-		System.out.println("Application started........................");
+		System.out.println("Ecommerce Application started........................");
 	}
 
 }
