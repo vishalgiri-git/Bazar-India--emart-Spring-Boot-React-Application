@@ -32,6 +32,7 @@ public class CustomerController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+    private final KafkaTemplate kafkaTemplate;
 
     @PostMapping
     public ResponseEntity<User> addUser(@Valid @RequestBody CustomerDTO user) {
@@ -39,11 +40,14 @@ public class CustomerController {
         User addedUser = userService.addUser(user);
 
         // kafka topic - user-info
-        //kafkaTemplate.send("user-info", user.getEmail());
-        //logger.info("user info pushed into kafka user-info topic");
+       /* kafkaTemplate.send("user-info", user.getEmail());
+        kafkaTemplate.send("user-info", user.getFirstName());
+        kafkaTemplate.send("user-info", user.getLastName());*/
+
+        kafkaTemplate.send("user-info",user);
+        logger.info("Customer Controler: => user info pushed into kafka user-info topic");
 
         // logger.
-        logger.info("successfully new customer created  {}", user);
 
         return ResponseEntity.ok(addedUser);
     }
