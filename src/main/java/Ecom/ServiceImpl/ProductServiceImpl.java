@@ -6,6 +6,7 @@ import java.util.Optional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,8 @@ import Ecom.Service.ProductService;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+
+
     @Override
     public Product addProduct(@Valid Product product) throws ProductException {
         if (product == null)
@@ -49,9 +52,9 @@ public class ProductServiceImpl implements ProductService {
         return existingProduct;
     }
 
+
     @Override
     public List<Product> getProductByName(String name) throws ProductException {
-
         List<Product> existProductByName = productRepository.findByName(name);
         if (existProductByName.isEmpty()) {
             throw new ProductException("Product Not found with name " + name);
@@ -59,6 +62,7 @@ public class ProductServiceImpl implements ProductService {
         return existProductByName;
     }
 
+    @Cacheable(cacheNames = "all-products")
     @Override
     public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy) throws ProductException {
 
@@ -80,6 +84,7 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+
     @Override
     public List<Product> getProductByCategory(String category) throws ProductException {
         // Retrieve products by category from the database
@@ -100,9 +105,9 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(existingProduct);
     }
 
+    @Cacheable(cacheNames = "product")
     @Override
     public Product getSingleProduct(Integer productId) {
-
         Product single = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
         return single;
     }
