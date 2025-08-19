@@ -11,9 +11,10 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
+import org.springframework.cache.annotation.EnableCaching;
 
 @EntityScan(basePackages = "Ecom")
-
+@EnableCaching
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "REST API", version = "1.1"), security = {
 		@SecurityRequirement(name = "basicAuth"), @SecurityRequirement(name = "bearerToken") }, servers = {
