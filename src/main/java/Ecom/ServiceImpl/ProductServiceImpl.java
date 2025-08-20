@@ -5,8 +5,9 @@ import java.util.Optional;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,8 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductException("Product Can not be Null");
         return productRepository.save(product);
     }
+
+
 
     @Override
     public List<Product> addAllProducts(List<Product> products) throws ProductException {
@@ -68,7 +71,7 @@ public class ProductServiceImpl implements ProductService {
         return existProductByName;
     }
 
-    @Cacheable(cacheNames = "all-products")
+ //   @Cacheable(cacheNames = "all-products")
     @Override
     public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy) throws ProductException {
 
@@ -91,6 +94,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+   /* @Override
+    public Page<Product> getAllProduct(String keyword, String sortDirection, String sortBy, int page, int size) throws ProductException {
+
+        Sort sort = Sort.by(sortDirection.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC, sortBy);
+        Pageable pageable = PageRequest.of(page, size, sort);
+
+        Page<Product> products;
+
+        if (keyword != null && !keyword.isEmpty()) {
+            products = productRepository.findAllByNameContainingIgnoreCase(keyword, pageable);
+        } else {
+            products = productRepository.findAll(pageable);
+        }
+
+        if (products.isEmpty()) {
+            throw new ProductException("Product List Empty");
+        }
+
+        return products;
+    }
+*/
     @Override
     public List<Product> getProductByCategory(String category) throws ProductException {
         // Retrieve products by category from the database
@@ -117,6 +141,11 @@ public class ProductServiceImpl implements ProductService {
         Product single = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
         return single;
     }
-
+    
+    @Override
+    public Page<Product> getAllProductsUsingPagination(Pageable pageable){
+        Page<Product> listOfProducts = productRepository.findAll(pageable);
+        return listOfProducts;
+    }
 
 }

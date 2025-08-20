@@ -5,6 +5,8 @@ import java.util.List;
 import Ecom.Exception.ProductException;
 import Ecom.Model.Product;
 import Ecom.ModelDTO.ProductDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface ProductService {
 	
@@ -16,8 +18,14 @@ public interface ProductService {
 	
 	public List<Product> getProductByName(String name)throws ProductException;
 	
-	public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy)throws ProductException;
-	
+	//public Page<Product> getAllProduct(String keyword, String sortDirection, String sortBy, int page, int size)throws ProductException;
+	//public Page<Product> getAllProduct(String keyword, String sortDirection, String sortBy)throws ProductException;
+
+	public Page<Product> getAllProductsUsingPagination(Pageable pageable);
+
+	//   @Cacheable(cacheNames = "all-products")
+	List<Product> getAllProduct(String keyword, String sortDirection, String sortBy) throws ProductException;
+
 	public List<Product> getProductByCategory(String catagory) throws ProductException;
 	
 	public void removeProduct(Integer productId)throws ProductException;
