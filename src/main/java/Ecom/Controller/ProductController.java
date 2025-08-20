@@ -4,6 +4,9 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +30,9 @@ public class ProductController {
     }*/
     @PostMapping("/add")
     @CachePut(cacheNames = "products")
-    public ResponseEntity<List<Product>> addAllProduct(@RequestBody List<@Valid Product> products){
+    public ResponseEntity<List<Product>> addAllProduct(
+            @RequestBody List<@Valid Product> products)
+    {
         List<Product> savedProducts = productService.addAllProducts(products);
         return new ResponseEntity<>(products, HttpStatus.CREATED);
 
@@ -43,8 +48,22 @@ public class ProductController {
         List<Product> products = productService.getProductByName(name);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
-
     @GetMapping("/all")
+    public ResponseEntity<?> search(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false, defaultValue = "asc") String sort,
+            @RequestParam(required = false, defaultValue = "price") String sortBy,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size
+
+    ){
+        return new ResponseEntity<>(
+                productService.getAllProduct(keyword,sort,sortBy),
+                HttpStatus.OK
+        );
+    }
+
+ /*   @GetMapping("/all")
     public ResponseEntity<List<Product>> search(
        @RequestParam (required = false)  String keyword,
        @RequestParam(required = false,defaultValue = "asc") String sort,
@@ -54,8 +73,16 @@ public class ProductController {
         List<Product> products = productService.getAllProduct(keyword, sort, sortBy);
         return new ResponseEntity<>(products, HttpStatus.OK);
     }
+*/
 
-
+    @GetMapping("/getByPaging")
+    public ResponseEntity<Page<Product>> getAllProductsUsingPagination(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size
+            ){
+        Page<Product> products = productService.getAllProductsUsingPagination(PageRequest.of(page, size));
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 
     @GetMapping("/category/{category}")
     public ResponseEntity<List<Product>> getProductByCategory(@PathVariable String category) {
