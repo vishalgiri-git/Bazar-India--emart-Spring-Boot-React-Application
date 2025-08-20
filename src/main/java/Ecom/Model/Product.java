@@ -45,7 +45,6 @@ public class Product {
     
     @NotNull(message = "Product description is Mandatory ,can Not Be Null")
   	@NotBlank(message = "Product description is Mandatory")
-    @Size(min=10,max = 50)
     @Column(name = "description")
     private String description;
 
