@@ -3,6 +3,7 @@ package Ecom.Controller;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,12 +20,18 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/add")
+  /*  @PostMapping("/add")
     public ResponseEntity<Product> addProduct(@Valid @RequestBody Product product) {
         Product newProduct = productService.addProduct(product);
         return new ResponseEntity<>(newProduct, HttpStatus.CREATED);
-    }
+    }*/
+    @PostMapping("/add")
+    @CachePut(cacheNames = "products")
+    public ResponseEntity<List<Product>> addAllProduct(@RequestBody List<@Valid Product> products){
+        List<Product> savedProducts = productService.addAllProducts(products);
+        return new ResponseEntity<>(products, HttpStatus.CREATED);
 
+    }
     @PutMapping("/update/{productId}")
     public ResponseEntity<Product> updateProduct( @PathVariable Integer productId, @Valid @RequestBody ProductDTO updatedProduct) {
         Product updatedProductResult = productService.updateProduct(productId, updatedProduct);
