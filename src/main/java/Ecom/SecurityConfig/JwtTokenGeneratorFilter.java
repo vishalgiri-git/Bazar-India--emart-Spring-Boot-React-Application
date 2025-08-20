@@ -28,7 +28,9 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
     @Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        long oneYearInMillis = 365L * 24 * 60 * 60 * 1000; // 31,536,000,000 ms
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		
         if (null != authentication) {
         	
@@ -40,7 +42,7 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
                     .claim("username", authentication.getName())
                     .claim("authorities", populateAuthorities(authentication.getAuthorities()))
                     .setIssuedAt(new Date())
-                    .setExpiration(new Date(new Date().getTime()+ 30000000)) 
+                    .setExpiration(new Date(new Date().getTime()+ oneYearInMillis))
                     .signWith(key).compact();       
             response.setHeader(SecurityConstants.JWT_HEADER, jwt);
 
