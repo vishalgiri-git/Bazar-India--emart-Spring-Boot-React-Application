@@ -3,6 +3,8 @@ package Ecom.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -20,7 +22,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p  WHERE p.category like %:cat%")
 	public List<Product> getProductCategoryName(@Param("cat") String category);
 
-    List<Product> findAllByNameContainingIgnoreCase(String keyword, Sort sort);
+
+	List<Product> findAllByNameContainingIgnoreCase(String keyword, Sort sort);
+	// method to support pagination.
+   // Page<Product> findAllByNameContainingIgnoreCase(String keyword, Pageable  pageable);
 
 //	@Query(value = "SELECT p FROM Product p JOIN Category c ON p.category_id = c.category_id WHERE c.name = :cat", nativeQuery = true)
 //	public List<Product> getProductCategoryName(@Param("cat") String category);
