@@ -9,6 +9,8 @@ import Ecom.ModelDTO.ProductDTO;
 public interface ProductService {
 	
 	public Product addProduct(Product products)throws ProductException;
+
+	public List<Product> addAllProducts(List<Product> products) throws ProductException;
 	
 	public Product updateProduct(Integer productId,ProductDTO product)throws ProductException;
 	

@@ -32,6 +32,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> addAllProducts(List<Product> products) throws ProductException {
+        List<Product> savedProducts = productRepository.saveAll(products);
+        return savedProducts;
+    }
+
+    @Override
     public Product updateProduct(Integer productId, ProductDTO updatedProduct) throws ProductException {
 
         Optional<Product> product = productRepository.findById(productId);
