@@ -30,6 +30,7 @@ import lombok.ToString;
 @Data
 @Entity
 @Table(name = "Users")
+@ToString
 public class User {
 	
     @Id
@@ -65,21 +66,29 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserAccountStatus userAccountStatus;
 
+
+    @ToString.Exclude
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL,mappedBy = "user")
     private Cart cart;
-    
+
+
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Orders> orders = new ArrayList<>();;
-    
+
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Review> reviews = new ArrayList<>();;
-    
+
+
+    @ToString.Exclude
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     private List<Address> address = new ArrayList<>();
-    
+
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Payment> payments = new ArrayList<>();

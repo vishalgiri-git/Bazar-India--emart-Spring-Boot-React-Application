@@ -21,23 +21,14 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceImplTest {
-
     @Mock
     private ProductRepository productRepository;
-
     @InjectMocks
     private ProductServiceImpl productService;
-
     private Product product;
 
     @BeforeEach
     void setUp(){
-        product = new Product();
-        product.setName("realme wired earphone");
-        product.setDescription("most trusted and long lasting earphone");
-        product.setProductId(499);
-        product.setCategory("earphones");
-        product.setAvailable(true);
 
     }
 
@@ -65,7 +56,6 @@ class ProductServiceImplTest {
         assertNotNull(listOfProducts);
         assertEquals(1, listOfProducts.size());
         assertEquals("realme wired earphone", listOfProducts.get(0).getName());
-
     }
 
     @Test

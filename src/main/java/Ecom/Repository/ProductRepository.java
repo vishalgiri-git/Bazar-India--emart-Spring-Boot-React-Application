@@ -30,6 +30,11 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 //	@Query(value = "SELECT p FROM Product p JOIN Category c ON p.category_id = c.category_id WHERE c.name = :cat", nativeQuery = true)
 //	public List<Product> getProductCategoryName(@Param("cat") String category);
 
-	
+	// query to find product which is greater than x Rs
+
+/*
+	@Query("SELECT p FROM PRODUCT p WHERE p.price > : price" )
+	List<Product> findByPriceGreaterThan(@Param("price") Double amount);
+*/
 
 }

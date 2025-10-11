@@ -73,7 +73,8 @@ public class ProductServiceImpl implements ProductService {
 
  //   @Cacheable(cacheNames = "all-products")
     @Override
-    public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy) throws ProductException {
+    public List<Product> getAllProduct(String keyword, String sortDirection, String sortBy)
+            throws ProductException {
 
         Sort sort = Sort.by(sortDirection.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,sortBy);
 

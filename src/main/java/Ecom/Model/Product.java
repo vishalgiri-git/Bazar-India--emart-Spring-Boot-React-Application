@@ -18,11 +18,17 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "Products")
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Product {
 	
     @Id
@@ -58,13 +64,28 @@ public class Product {
     private String category; 
     
 
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     private List<OrderItem> orderItem= new ArrayList<>();;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
     private List<Review> reviews= new ArrayList<>();;
-    
-   
+
+ /*   public Product(int i, String acer, String acersprie3993, boolean b, String thisIsTheAcerLaptop, int i1, String laptop) {
+    }
+
+*/
+ public Product(Integer productId, String name, String imageUrl, boolean isAvailable,
+                String description, Double price, String category) {
+     this.productId = productId;
+     this.name = name;
+     this.imageUrl = imageUrl;
+     this.isAvailable = isAvailable;
+     this.description = description;
+     this.price = price;
+     this.category = category;
+ }
 }
 

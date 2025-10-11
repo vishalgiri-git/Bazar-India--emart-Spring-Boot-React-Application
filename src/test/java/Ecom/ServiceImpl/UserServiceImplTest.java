@@ -93,8 +93,6 @@ class UserServiceImplTest {
         // assert
         assertEquals(2002, allUserDetails.get(0).getUserId());
 
-
-
     }
 
 
@@ -119,16 +117,12 @@ class UserServiceImplTest {
     void addUser_ShouldSaveNewUser_WhenEmailNotExists() throws UserException {
 
         // Arrange.
-
         when(userRepository.findByEmail(customerDTO.getEmail()))
                 .thenReturn(Optional.empty());
-
         when(userRepository.save(any(User.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
-
         // Act.
         User savedUser = userService.addUser(customerDTO);
-
         // Assert.
         assertEquals("vishal@gmail.com", savedUser.getEmail());
 

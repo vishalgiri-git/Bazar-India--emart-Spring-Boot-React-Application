@@ -12,7 +12,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 @ControllerAdvice
 public class GlobalExceptionhandler {
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<MyErrorClass> getException(MethodArgumentNotValidException e, WebRequest req) {
 
