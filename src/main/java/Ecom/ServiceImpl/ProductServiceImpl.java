@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
         productRepository.delete(existingProduct);
     }
 
-    @Cacheable(cacheNames = "product")
+    //@Cacheable(cacheNames = "product")
     @Override
     public Product getSingleProduct(Integer productId) {
         Product single = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
