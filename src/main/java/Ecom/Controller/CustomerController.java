@@ -44,7 +44,7 @@ public class CustomerController {
         kafkaTemplate.send("user-info", user.getFirstName());
         kafkaTemplate.send("user-info", user.getLastName());*/
 
-        kafkaTemplate.send("user-info",user);
+      //  kafkaTemplate.send("user-info",user);
         logger.info("Customer Controler: => user info pushed into kafka user-info topic");
 
         // logger.

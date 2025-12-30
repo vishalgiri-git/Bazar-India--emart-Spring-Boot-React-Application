@@ -25,7 +25,6 @@ import jakarta.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/ecom/customer-addresses")
 public class AddressController {
-
     private final AddressService addressService;
 
     @PostMapping("/{userId}")

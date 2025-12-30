@@ -31,5 +31,9 @@ public interface ProductService {
 	public void removeProduct(Integer productId)throws ProductException;
 
 	public Product getSingleProduct(Integer productId);
+
+	public List<Product> getProductByNameContaining(String name);
+
+	public List<Product> getProductByPriceBetweenRange(double x, double y);
 }
  

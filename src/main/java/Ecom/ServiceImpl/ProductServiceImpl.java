@@ -32,8 +32,6 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.save(product);
     }
 
-
-
     @Override
     public List<Product> addAllProducts(List<Product> products) throws ProductException {
         List<Product> savedProducts = productRepository.saveAll(products);
@@ -142,11 +140,24 @@ public class ProductServiceImpl implements ProductService {
         Product single = productRepository.findById(productId).orElseThrow(() -> new ProductException("Product not found"));
         return single;
     }
-    
+
+    @Override
+    public List<Product> getProductByNameContaining(String name) {
+
+        List<Product> list = productRepository.findByNameContainingIgnoreCase(name);
+        return list;
+
+    }
+
     @Override
     public Page<Product> getAllProductsUsingPagination(Pageable pageable){
         Page<Product> listOfProducts = productRepository.findAll(pageable);
         return listOfProducts;
     }
 
+    @Override
+    public List<Product> getProductByPriceBetweenRange(double x, double y) {
+        List<Product> list = productRepository.findByPriceBetween(x, y);
+        return list;
+    }
 }

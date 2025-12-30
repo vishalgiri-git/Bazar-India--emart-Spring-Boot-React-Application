@@ -22,6 +22,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	@Query("SELECT p FROM Product p  WHERE p.category like %:cat%")
 	public List<Product> getProductCategoryName(@Param("cat") String category);
 
+	List<Product> findByNameContainingIgnoreCase(String name);
+
+
+	List<Product> findByPriceBetween(double x, double y);
 
 	List<Product> findAllByNameContainingIgnoreCase(String keyword, Sort sort);
 	// method to support pagination.

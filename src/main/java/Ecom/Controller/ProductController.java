@@ -2,6 +2,7 @@ package Ecom.Controller;
 
 import java.util.List;
 
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.data.domain.Page;
@@ -102,4 +103,27 @@ public class ProductController {
         productService.removeProduct(productId);
         return new ResponseEntity<>("Product removed successfully.", HttpStatus.OK);
     }
+    // api to retrive product which contains given keyword keyword
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> getProductByNameContaining
+            (@RequestParam("name") String name){
+        List<Product> list = productService.getProductByNameContaining(name);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+
+    }
+
+    @GetMapping("/range")
+    public ResponseEntity<List<Product>> getProductByPriceRange(
+            @RequestParam("lowerPrice") double lowerPrice,
+            @RequestParam("higherPrice") double higherPrice
+    ){
+        List<Product> list =
+                productService.getProductByPriceBetweenRange(lowerPrice, higherPrice);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+
+    }
+
 }
+
+
